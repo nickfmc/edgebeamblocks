@@ -1,0 +1,44 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "gdt-ng/testimonial-slide",
+	"version": "0.1.0",
+	"title": "Testimonial Slide",
+	"category": "theme-blocks",
+	"description": "A single testimonial with quote, name, title, and avatar.",
+	"parent": [ "gdt-ng/testimonial-carousel" ],
+	"supports": {
+		"html": false,
+		"inserter": false
+	},
+	"attributes": {
+		"quote": {
+			"type": "string",
+			"default": ""
+		},
+		"name": {
+			"type": "string",
+			"default": ""
+		},
+		"jobTitle": {
+			"type": "string",
+			"default": ""
+		},
+		"avatarId": {
+			"type": "number"
+		},
+		"avatarUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"avatarAlt": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"textdomain": "cl-theme-blocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

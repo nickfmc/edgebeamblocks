@@ -1,0 +1,46 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "gdt-ng/vertical-slider",
+	"version": "0.1.0",
+	"title": "Vertical Slider",
+	"category": "theme-blocks",
+	"description": "A vertical slider with flexible content. Shows preview of previous and next slides.",
+	"example": {},
+	"attributes": {
+		"showArrows": {
+			"type": "boolean",
+			"default": true
+		},
+		"showDots": {
+			"type": "boolean",
+			"default": true
+		},
+		"slideGap": {
+			"type": "number",
+			"default": 30
+		},
+		"previewPx": {
+			"type": "number",
+			"default": 60
+		},
+		"alignTop": {
+			"type": "boolean",
+			"default": false
+		},
+		"previewFadeColor": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": ["wide", "full"]
+	},
+	"textdomain": "cl-theme-blocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"viewScript": "file:./view.js"
+}

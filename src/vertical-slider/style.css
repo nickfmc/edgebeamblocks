@@ -1,0 +1,325 @@
+/* Vertical Slider — front-end styles */
+
+/*
+ * Layout approach:
+ *  - Outer wrapper (.vertical-slider): overflow visible so dots outside the
+ *    container remain visible.
+ *  - Inner container (.vertical-slider__slides-container): overflow hidden,
+ *    height set dynamically by view.js based on active slide height +
+ *    (2 × previewPx) + (2 × slideGap).
+ *  - Slide positions use CSS custom properties set inline by view.js so that
+ *    exactly `previewPx` of each neighbouring slide peeks in at the edges.
+ */
+
+.vertical-slider {
+	position: relative;
+	width: 100%;
+	overflow: visible;
+	padding-right: 100px;
+}
+
+/* Slides container — clips slides but not the outer dots */
+.vertical-slider__slides-container {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	/* Height is calculated and set inline by view.js */
+}
+
+/* Individual slides — direct children */
+.vertical-slider__slides-container > * {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	right: 0;
+	width: 100%;
+	opacity: 0;
+	transform: translateY(-50%);
+	transition: opacity 0.5s ease, transform 0.5s ease;
+	pointer-events: none;
+	z-index: 0;
+}
+
+/*
+ * Fade overlays are NOT slides — reset everything the > * rule applied.
+ * These rules come after > * so they win with equal specificity.
+ */
+.vertical-slider__fade-top,
+.vertical-slider__fade-bottom {
+	top: auto;
+	transform: none;
+	transition: none;
+	opacity: 1;
+	pointer-events: none;
+	z-index: 5;
+}
+
+/* Active slide — fully visible, centred */
+.vertical-slider__slides-container > *.is-active {
+	opacity: 1;
+	transform: translateY(-50%);
+	pointer-events: auto;
+	z-index: 2;
+}
+
+/*
+ * Previous slide — peek above.
+ * Offset = move up by half the container + gap between slides.
+ * The container is sized so exactly var(--preview-px) is visible at the top.
+ */
+.vertical-slider__slides-container > *.is-prev {
+	opacity: 0.3;
+	transform: translateY(
+		calc(
+			-50%                             /* base centre alignment */
+			- var(--slide-height, 400px)     /* full slide height up */
+			- var(--slide-gap, 30px)         /* plus the gap */
+		)
+	);
+	pointer-events: none;
+	z-index: 1;
+}
+
+/*
+ * Next slide — peek below.
+ * Mirror of is-prev.
+ */
+.vertical-slider__slides-container > *.is-next {
+	opacity: 0.3;
+	transform: translateY(
+		calc(
+			-50%
+			+ var(--slide-height, 400px)
+			+ var(--slide-gap, 30px)
+		)
+	);
+	pointer-events: none;
+	z-index: 1;
+}
+
+/* Arrow buttons */
+.vertical-slider__arrow {
+	position: absolute;
+	right: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	border: 2px solid #1b2a4a;
+	background: rgba(255, 255, 255, 0.95);
+	color: #1b2a4a;
+	cursor: pointer;
+	border-radius: 50%;
+	padding: 0;
+	transition: all 0.2s ease;
+	z-index: 10;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.vertical-slider__arrow:focus {
+	outline: 2px solid #1b2a4a;
+	outline-offset: 2px;
+}
+
+.vertical-slider__arrow--prev {
+	top: 50%;
+	transform: translateY(-100%);
+	margin-top: -12px;
+}
+
+.vertical-slider__arrow--prev:hover {
+	background: #1b2a4a;
+	color: #ffffff;
+	transform: translateY(-100%) scale(1.1);
+	margin-top: -12px;
+}
+
+.vertical-slider__arrow--next {
+	top: 50%;
+	transform: translateY(0);
+	margin-top: 12px;
+}
+
+.vertical-slider__arrow--next:hover {
+	background: #1b2a4a;
+	color: #ffffff;
+	transform: translateY(0) scale(1.1);
+	margin-top: 12px;
+}
+
+.vertical-slider__arrow svg {
+	width: 24px;
+	height: 24px;
+}
+
+/* Hide arrows when data attribute is false */
+.vertical-slider[data-show-arrows="false"] .vertical-slider__arrow {
+	display: none;
+}
+
+/* Navigation dots */
+.vertical-slider__dots {
+	position: absolute;
+	bottom: -60px;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	gap: 12px;
+	z-index: 10;
+	padding: 8px 16px;
+	background: rgba(255, 255, 255, 0.9);
+	border-radius: 24px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.vertical-slider__dot {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	border: 2px solid #1b2a4a;
+	background: transparent;
+	cursor: pointer;
+	padding: 0;
+	transition: all 0.2s ease;
+}
+
+.vertical-slider__dot:hover {
+	background: rgba(27, 42, 74, 0.3);
+	transform: scale(1.2);
+}
+
+.vertical-slider__dot.is-active {
+	background: #1b2a4a;
+	transform: scale(1.3);
+}
+
+/* Hide dots when data attribute is false */
+.vertical-slider[data-show-dots="false"] .vertical-slider__dots {
+	display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+	.vertical-slider__arrow {
+		width: 40px;
+		height: 40px;
+	}
+
+	.vertical-slider__arrow svg {
+		width: 20px;
+		height: 20px;
+	}
+
+	.vertical-slider__arrow {
+		right: 16px;
+	}
+
+	.vertical-slider__arrow--prev {
+		margin-top: -10px;
+	}
+
+	.vertical-slider__arrow--next {
+		margin-top: 10px;
+	}
+
+	.vertical-slider__dots {
+		bottom: -50px;
+		gap: 8px;
+		padding: 6px 12px;
+	}
+
+	.vertical-slider__dot {
+		width: 10px;
+		height: 10px;
+	}
+}
+
+@media (max-width: 480px) {
+	.vertical-slider__arrow {
+		width: 36px;
+		height: 36px;
+		right: 12px;
+	}
+
+	.vertical-slider__arrow svg {
+		width: 18px;
+		height: 18px;
+	}
+
+	.vertical-slider__dots {
+		bottom: -40px;
+	}
+}
+
+/* ==========================================================================
+   Top-align mode — active slide pins to top, only next slide previews below
+   ========================================================================== */
+
+.vertical-slider[data-align-top="true"] .vertical-slider__slides-container > * {
+	top: 0;
+	transform: none;
+}
+
+/* Re-assert fade overlay positions after the top-align > * reset */
+.vertical-slider[data-align-top="true"] .vertical-slider__fade-bottom {
+	top: auto;
+	bottom: 0;
+}
+
+.vertical-slider[data-align-top="true"] .vertical-slider__slides-container > *.is-active {
+	opacity: 1;
+	top: 0;
+	transform: none;
+	pointer-events: auto;
+	z-index: 2;
+}
+
+/* Prev slide: hidden entirely in top-align mode */
+.vertical-slider[data-align-top="true"] .vertical-slider__slides-container > *.is-prev {
+	opacity: 0;
+	transform: none;
+	pointer-events: none;
+}
+
+/* Next slide: positioned just below the active slide + gap */
+.vertical-slider[data-align-top="true"] .vertical-slider__slides-container > *.is-next {
+	opacity: 0.3;
+	top: 0;
+	transform: translateY(
+		calc(
+			var(--slide-height, 400px)
+			+ var(--slide-gap, 30px)
+		)
+	);
+	pointer-events: none;
+	z-index: 1;
+}
+
+/* ==========================================================================
+   Preview fade overlays
+   ========================================================================== */
+
+.vertical-slider__fade-top,
+.vertical-slider__fade-bottom {
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: var(--preview-px, 60px);
+	pointer-events: none;
+	z-index: 5;
+}
+
+.vertical-slider__fade-top {
+	top: 0;
+}
+
+.vertical-slider__fade-bottom {
+	bottom: 0;
+}
+
+/* In top-align mode the active slide starts at the very top edge,
+   so there is no prev preview — hide the top fade. */
+.vertical-slider[data-align-top="true"] .vertical-slider__fade-top {
+	display: none;
+}

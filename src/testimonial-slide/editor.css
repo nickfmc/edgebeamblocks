@@ -1,0 +1,64 @@
+/* Testimonial Slide — editor styles */
+
+.testimonial-slide-editor {
+	padding: 16px;
+	background: #fff;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+}
+
+.testimonial-slide-editor__top {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 12px;
+}
+
+.testimonial-slide-editor__avatar-btn {
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	overflow: hidden;
+	padding: 0;
+	border: 2px dashed #ccc;
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+
+.testimonial-slide-editor__avatar-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.testimonial-slide-editor__avatar-placeholder {
+	font-size: 11px;
+	color: #999;
+}
+
+.testimonial-slide-editor__person-info {
+	flex: 1;
+}
+
+.testimonial-slide-editor__name {
+	margin: 0 0 2px;
+	font-weight: 700;
+	font-size: 1rem;
+}
+
+.testimonial-slide-editor__job-title {
+	margin: 0;
+	font-size: 0.875rem;
+	color: #666;
+}
+
+.testimonial-slide-editor__quote {
+	margin: 0;
+	font-size: 1rem;
+	font-style: italic;
+	color: #333;
+}

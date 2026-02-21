@@ -1,0 +1,28 @@
+/* Vertical Slider — editor styles */
+
+.vertical-slider-editor {
+	background: linear-gradient(180deg, #f0f0f1 0%, #ffffff 50%, #f0f0f1 100%);
+	padding: 24px;
+	border-radius: 8px;
+	border: 2px dashed #8c8f94;
+	position: relative;
+}
+
+.vertical-slider-editor::before {
+	content: "Vertical Slider";
+	position: absolute;
+	top: 8px;
+	left: 12px;
+	font-size: 11px;
+	font-weight: 600;
+	color: #8c8f94;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.vertical-slider-editor .block-editor-inner-blocks > .block-editor-block-list__layout {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin-top: 12px;
+}

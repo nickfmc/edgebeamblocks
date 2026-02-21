@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run build:*)",
+      "Bash(npx wp-scripts build:*)",
+      "Bash(npx wp-scripts format:*)",
+      "Bash(npx wp-scripts:*)"
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ */
+
+.wp-block-gdt-ng-hello-world {
+	background-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--base);
+	padding: var(--wp--preset--spacing--20);
+
+	/* Content elements - organize by functionality, not excessive nesting */
+	& .internal-element {
+		color: var(--wp--preset--color--contrast);
+		margin-block: var(--wp--preset--spacing--10);
+	}
+
+	/* Interactive states */
+	&:hover {
+		background-color: var(--wp--preset--color--secondary);
+		transform: translateY(-2px);
+		transition: all 0.2s ease;
+	}
+}

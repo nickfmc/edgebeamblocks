@@ -1,0 +1,13 @@
+/**
+ * The following styles get applied inside the editor only.
+ */
+
+.hello-world-block-editor {
+	border: 1px dotted #bbb;
+	
+	/* Editor-specific overrides using custom classes */
+	&:hover {
+		border-style: solid;
+		border-color: var(--wp--preset--color--primary);
+	}
+}

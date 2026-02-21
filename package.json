@@ -1,0 +1,23 @@
+{
+  "name": "theme-blocks",
+  "version": "0.1.0",
+  "description": "Custom WordPress blocks for bespoke site builds",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "format": "wp-scripts format",
+    "lint:js": "wp-scripts lint-js",
+    "lint:css": "wp-scripts lint-style"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^30.25.0"
+  },
+  "keywords": [
+    "wordpress",
+    "blocks",
+    "gutenberg"
+  ],
+  "author": "Creative Logic Tech Solutions",
+  "license": "GPL-2.0-or-later"
+}
