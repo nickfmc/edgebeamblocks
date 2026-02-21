@@ -256,6 +256,20 @@
    Top-align mode — active slide pins to top, only next slide previews below
    ========================================================================== */
 
+/*
+ * In top-align mode the active slide runs from top: 0 to var(--slide-height),
+ * so its vertical centre is at calc(var(--slide-height) / 2) from the top of
+ * the wrapper.  Override the default top: 50% so the arrows stay centred on
+ * the active slide rather than on the whole (taller) container.
+ */
+.vertical-slider[data-align-top="true"] .vertical-slider__arrow--prev {
+	top: calc( var(--slide-height, 400px) / 2 );
+}
+
+.vertical-slider[data-align-top="true"] .vertical-slider__arrow--next {
+	top: calc( var(--slide-height, 400px) / 2 );
+}
+
 .vertical-slider[data-align-top="true"] .vertical-slider__slides-container > * {
 	top: 0;
 	transform: none;

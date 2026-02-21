@@ -67,10 +67,12 @@
 				? slideHeight + previewPx + slideGap
 				: slideHeight + 2 * previewPx + 2 * slideGap;
 
-			// Set CSS custom properties for the transforms defined in style.css.
-			container.style.setProperty( '--slide-height', slideHeight + 'px' );
-			container.style.setProperty( '--slide-gap',    slideGap    + 'px' );
-			container.style.setProperty( '--preview-px',   previewPx   + 'px' );
+			// Set CSS custom properties on the slider wrapper so that both the
+			// container children (is-prev/next transforms, fade overlays) AND the
+			// absolutely-positioned arrow siblings can inherit them.
+			slider.style.setProperty( '--slide-height', slideHeight + 'px' );
+			slider.style.setProperty( '--slide-gap',    slideGap    + 'px' );
+			slider.style.setProperty( '--preview-px',   previewPx   + 'px' );
 
 			// Set the explicit container height.
 			container.style.height = totalHeight + 'px';
