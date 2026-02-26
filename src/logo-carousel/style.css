@@ -1,0 +1,179 @@
+/**
+ * Logo Carousel — front-end styles.
+ *
+ * Layout overview
+ * ───────────────
+ * The wrapper is `position: relative; overflow: hidden` with horizontal
+ * padding that reserves space for the arrow buttons.
+ *
+ * All slides are `position: absolute` inside the track, centred via
+ * `left: 50%; top: 50%` then shifted by `--slide-x` (set by view.js).
+ * The five positional classes drive `transform: scale()` and `opacity`.
+ *
+ * Scale constants — must match edit.js and view.js:
+ *   Active:   scale 1,    opacity 1
+ *   Adjacent: scale 0.65, opacity 0.55
+ *   Outer:    scale 0.42, opacity 0.28
+ */
+
+/* ── Wrapper ─────────────────────────────────────────────────────────────── */
+
+.logo-carousel {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	/* Reserve space for the absolutely-positioned arrows. */
+	padding: 0 48px;
+	box-sizing: border-box;
+
+	/*
+	 * Clip off-screen slides horizontally without ever clipping slide height
+	 * vertically. `overflow-x: clip` (unlike `overflow-x: hidden`) does not
+	 * create a new block formatting context, so overflow-y stays truly visible.
+	 */
+	overflow-x: clip;
+	overflow-y: visible;
+
+	/* Hidden until view.js has positioned all slides (prevents FOUC). */
+	opacity: 0;
+	transition: opacity 0.25s ease;
+}
+
+.logo-carousel.is-ready {
+	opacity: 1;
+}
+
+/* ── Track (contains all slides) ─────────────────────────────────────────── */
+
+.logo-carousel__track {
+	position: relative;
+	width: 100%;
+	/* Height is set dynamically by view.js from the tallest visible slide. */
+	min-height: 60px;
+}
+
+/* ── Individual slides ───────────────────────────────────────────────────── */
+
+.logo-carousel__slide {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+
+	/*
+	 * translate(-50% + --slide-x, -50%) centres the slide then offsets it
+	 * horizontally. scale(--slide-s) shrinks non-active slides; it is applied
+	 * in the same transform so it scales around the slide's own centre.
+	 *
+	 * Default: hidden (no position class assigned). view.js assigns classes
+	 * and sets --slide-x on each paint call.
+	 */
+	transform: translate( calc( -50% + var( --slide-x, 0px ) ), -50% ) scale( var( --slide-s, 1 ) );
+
+	opacity: 0;
+	pointer-events: none;
+
+	filter: grayscale( 100% );
+
+	transition:
+		transform 0.4s ease,
+		opacity   0.4s ease;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Active — centre, full size. */
+.logo-carousel__slide.is-active {
+	--slide-s: 1;
+	opacity: 1;
+	pointer-events: auto;
+}
+
+/* Adjacent (±1) — slightly scaled down. */
+.logo-carousel__slide.is-adjacent-left,
+.logo-carousel__slide.is-adjacent-right {
+	--slide-s: 0.65;
+	opacity: 0.55;
+	pointer-events: auto;
+}
+
+/* Outer (±2) — most reduced. */
+.logo-carousel__slide.is-outer-left,
+.logo-carousel__slide.is-outer-right {
+	--slide-s: 0.42;
+	opacity: 0.28;
+}
+
+/* Suppresses transition when a slide is pre-positioned off-screen by view.js
+   so it doesn't sweep across the carousel before fading in. */
+.logo-carousel__slide.no-transition {
+	transition: none !important;
+}
+
+/* ── Arrow buttons ───────────────────────────────────────────────────────── */
+
+.logo-carousel__arrow {
+	position: absolute;
+	top: 50%;
+	transform: translateY( -50% );
+	z-index: 2;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background: none;
+	border: none;
+	padding: 8px;
+	margin: 0;
+
+	cursor: pointer;
+	color: currentColor;
+	opacity: 0.4;
+	transition: opacity 0.2s ease;
+	flex-shrink: 0;
+	line-height: 1;
+}
+
+.logo-carousel__arrow:hover,
+.logo-carousel__arrow:focus-visible {
+	opacity: 1;
+	outline: none;
+}
+
+.logo-carousel__arrow--prev {
+	left: 4px;
+}
+
+.logo-carousel__arrow--next {
+	right: 4px;
+}
+
+/* ── Responsive: 3-up on tablet ──────────────────────────────────────────── */
+
+@media ( max-width: 1024px ) {
+	.logo-carousel__slide.is-outer-left,
+	.logo-carousel__slide.is-outer-right {
+		opacity: 0 !important;
+		pointer-events: none !important;
+	}
+}
+
+/* ── Responsive: 1-up on mobile ──────────────────────────────────────────── */
+
+@media ( max-width: 640px ) {
+	.logo-carousel__slide.is-adjacent-left,
+	.logo-carousel__slide.is-adjacent-right {
+		opacity: 0 !important;
+		pointer-events: none !important;
+	}
+
+	.logo-carousel {
+		padding: 0 36px;
+	}
+}

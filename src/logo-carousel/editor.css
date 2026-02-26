@@ -1,0 +1,114 @@
+/**
+ * Logo Carousel — editor-only styles.
+ */
+
+/* ── Editor canvas wrapper ───────────────────────────────────────────────── */
+
+.logo-carousel-editor {
+	width: 100%;
+	padding: 16px 0;
+	box-sizing: border-box;
+	position: relative;
+}
+
+/* ── Preview track ───────────────────────────────────────────────────────── */
+
+.logo-carousel-editor__track {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: nowrap;
+	overflow: hidden;
+	padding: 16px 0;
+}
+
+.logo-carousel-editor__preview-slide img {
+	display: block;
+	max-width: 100%;
+}
+
+/* ── Prev / next editor nav ──────────────────────────────────────────────── */
+
+.logo-carousel-editor__nav {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	margin-top: 8px;
+	font-size: 12px;
+}
+
+.logo-carousel-editor__nav-label {
+	color: #757575;
+	min-width: 40px;
+	text-align: center;
+}
+
+/* ── Empty state placeholder ─────────────────────────────────────────────── */
+
+.logo-carousel-editor__placeholder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	padding: 40px 24px;
+	border: 2px dashed #ccc;
+	border-radius: 4px;
+	text-align: center;
+	color: #757575;
+}
+
+.logo-carousel-editor__placeholder p {
+	margin: 0;
+	font-size: 14px;
+}
+
+/* ── Sidebar logo list ───────────────────────────────────────────────────── */
+
+.logo-carousel-editor__logo-item {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 10px 0;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.logo-carousel-editor__logo-item:last-of-type {
+	border-bottom: none;
+}
+
+.logo-carousel-editor__logo-thumb {
+	width: 56px;
+	height: 40px;
+	object-fit: contain;
+	flex-shrink: 0;
+	background: #f0f0f0;
+	border-radius: 3px;
+	padding: 4px;
+	box-sizing: border-box;
+}
+
+.logo-carousel-editor__logo-controls {
+	flex: 1;
+	min-width: 0;
+}
+
+.logo-carousel-editor__logo-controls .components-base-control {
+	margin-bottom: 4px;
+}
+
+.logo-carousel-editor__logo-actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 4px;
+}
+
+/* ── Add button ──────────────────────────────────────────────────────────── */
+
+.logo-carousel-editor__add-button {
+	width: 100%;
+	margin-top: 12px;
+	justify-content: center;
+}

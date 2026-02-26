@@ -36,4 +36,13 @@ export const verticalSliderIcon = (
 	</svg>
 );
 
+export const logoCarouselIcon = (
+	<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+		<rect x="1"  y="9" width="4" height="6" rx="1" fill="#455378" opacity="0.3" />
+		<rect x="6"  y="7" width="5" height="10" rx="1" fill="#455378" opacity="0.6" />
+		<rect x="12" y="5" width="6" height="14" rx="1" fill="#455378" />
+		<rect x="19" y="7" width="4" height="10" rx="1" fill="#455378" opacity="0.6" />
+	</svg>
+);
+
 // Add more icons here as needed
