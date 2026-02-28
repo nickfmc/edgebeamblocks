@@ -6,11 +6,12 @@
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
 
-$images       = $attributes['images']      ?? [];
-$interval_ms  = isset( $attributes['intervalMs'] )  ? (int) $attributes['intervalMs']  : 3000;
-$stagger_ms   = isset( $attributes['staggerMs'] )   ? (int) $attributes['staggerMs']   : 1500;
-$aspect_ratio = isset( $attributes['aspectRatio'] ) ? sanitize_text_field( $attributes['aspectRatio'] ) : '4/5';
-$gap          = isset( $attributes['gap'] )          ? (int) $attributes['gap']          : 24;
+$images        = $attributes['images']       ?? [];
+$interval_ms   = isset( $attributes['intervalMs'] )   ? (int) $attributes['intervalMs']   : 3000;
+$stagger_ms    = isset( $attributes['staggerMs'] )    ? (int) $attributes['staggerMs']    : 1500;
+$aspect_ratio  = isset( $attributes['aspectRatio'] )  ? sanitize_text_field( $attributes['aspectRatio'] ) : '4/5';
+$gap           = isset( $attributes['gap'] )           ? (int) $attributes['gap']           : 24;
+$border_radius = isset( $attributes['borderRadius'] )  ? (int) $attributes['borderRadius']  : 18;
 
 // Need at least 2 images to render anything useful.
 if ( count( $images ) < 2 ) {
@@ -37,21 +38,25 @@ $wrapper_attrs = get_block_wrapper_attributes( [
 	'data-stagger'       => (string) $stagger_ms,
 	'data-aspect-ratio'  => esc_attr( $aspect_ratio ),
 	'data-gap'           => (string) $gap,
-	'style'              => '--ig-ratio:' . esc_attr( $aspect_ratio ) . ';--ig-gap:' . (int) $gap . 'px',
+	'style'              => '--ig-ratio:' . esc_attr( $aspect_ratio ) . ';--ig-gap:' . (int) $gap . 'px;--ig-radius:' . $border_radius . 'px',
 ] );
 ?>
 <div <?php echo $wrapper_attrs; ?>>
 
-	<canvas
-		class="image-gallery__slot image-gallery__slot--a"
-		role="img"
-		aria-label="<?php esc_attr_e( 'Gallery slot A', 'cl-theme-blocks' ); ?>"
-	></canvas>
+	<div class="image-gallery__slot-wrap">
+		<canvas
+			class="image-gallery__slot image-gallery__slot--a"
+			role="img"
+			aria-label="<?php esc_attr_e( 'Gallery slot A', 'cl-theme-blocks' ); ?>"
+		></canvas>
+	</div>
 
-	<canvas
-		class="image-gallery__slot image-gallery__slot--b"
-		role="img"
-		aria-label="<?php esc_attr_e( 'Gallery slot B', 'cl-theme-blocks' ); ?>"
-	></canvas>
+	<div class="image-gallery__slot-wrap">
+		<canvas
+			class="image-gallery__slot image-gallery__slot--b"
+			role="img"
+			aria-label="<?php esc_attr_e( 'Gallery slot B', 'cl-theme-blocks' ); ?>"
+		></canvas>
+	</div>
 
 </div>

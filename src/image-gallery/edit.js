@@ -23,7 +23,7 @@ const ASPECT_OPTIONS = [
 ];
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { images, intervalMs, staggerMs, aspectRatio, gap } = attributes;
+	const { images, intervalMs, staggerMs, aspectRatio, gap, borderRadius } = attributes;
 	const [ hoveredIndex, setHoveredIndex ] = useState( null );
 
 	/* ── Image management ─────────────────────────────────────────── */
@@ -65,7 +65,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		flex: '1 1 0',
 		minWidth: 0,
 		background: '#1a1a2e',
-		borderRadius: '4px',
+		borderRadius: `${ borderRadius }px`,
 		overflow: 'hidden',
 		position: 'relative',
 	};
@@ -169,6 +169,12 @@ export default function Edit( { attributes, setAttributes } ) {
 						value={ gap }
 						onChange={ ( value ) => setAttributes( { gap: value } ) }
 						min={ 0 } max={ 80 } step={ 4 }
+					/>
+					<RangeControl
+						label={ __( 'Border Radius (px)', 'cl-theme-blocks' ) }
+						value={ borderRadius }
+						onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
+						min={ 0 } max={ 80 } step={ 2 }
 					/>
 				</PanelBody>
 			</InspectorControls>

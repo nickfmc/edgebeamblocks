@@ -181,21 +181,27 @@
 		/* ── CSS fallback when WebGL is unavailable ──────────────────────── */
 		if ( ! glA || ! glB ) {
 			block.classList.add( 'image-gallery--no-webgl' );
-			let idxA = 0, idxB = 1 % imageData.length;
+			const evenImgs = imageData.filter( ( _, i ) => i % 2 === 0 );
+			const oddImgs  = imageData.filter( ( _, i ) => i % 2 === 1 );
+			const oddSet   = oddImgs.length > 0 ? oddImgs : evenImgs;
+			let idxA = 0, idxB = 0;
 
-			function applyBg( el, idx ) {
-				const img = imageData[ idx ];
+			/* Apply background-image to the wrapper div, not the canvas */
+			const wrapA = canvasA.parentElement;
+			const wrapB = canvasB.parentElement;
+
+			function applyBg( el, img ) {
 				el.style.backgroundImage = `url('${ img.url }')`;
 				el.setAttribute( 'aria-label', img.alt || '' );
 			}
 
-			applyBg( canvasA, idxA );
-			applyBg( canvasB, idxB );
+			applyBg( wrapA, evenImgs[ 0 ] );
+			applyBg( wrapB, oddSet[ 0 ] );
 			block.classList.add( 'is-ready' );
 
-			setInterval( () => { idxA = ( idxA + 1 ) % imageData.length; applyBg( canvasA, idxA ); }, intervalMs );
+			setInterval( () => { idxA = ( idxA + 1 ) % evenImgs.length; applyBg( wrapA, evenImgs[ idxA ] ); }, intervalMs );
 			setTimeout( () => {
-				setInterval( () => { idxB = ( idxB + 1 ) % imageData.length; applyBg( canvasB, idxB ); }, intervalMs );
+				setInterval( () => { idxB = ( idxB + 1 ) % oddSet.length; applyBg( wrapB, oddSet[ idxB ] ); }, intervalMs );
 			}, staggerMs );
 			return;
 		}
@@ -265,10 +271,12 @@
 		}
 
 		function makeSlot( gl, prog, quad, uni, seed, startIdx, textures ) {
-			return { gl, prog, quad, uni, seed, textures, startIdx,
-				currentIdx:    startIdx % textures.length,
-				nextIdx:       ( startIdx + 1 ) % textures.length,
-				transitioning: false,
+			const len = textures.length;
+			return { gl, prog, quad, uni, seed, textures,
+				currentIdx:      startIdx % len,
+				/* stride by 2 so A cycles even indices and B cycles odd indices */
+				nextIdx:         ( startIdx + 2 ) % len,
+				transitioning:   false,
 				transitionStart: 0,
 			};
 		}
@@ -303,11 +311,11 @@
 		/* ── Per-slot transition trigger ─────────────────────────────────── */
 
 		function beginTransition( slot, canvas ) {
-			slot.nextIdx         = ( slot.currentIdx + 1 ) % slot.textures.length;
+			/* Stride by 2 — keeps A on even indices, B on odd */
+			slot.nextIdx         = ( slot.currentIdx + 2 ) % slot.textures.length;
 			slot.transitionStart = performance.now();
 			slot.transitioning   = true;
 
-			/* Update accessible label to incoming image */
 			const next = imageData[ slot.nextIdx ];
 			if ( next && next.alt ) canvas.setAttribute( 'aria-label', next.alt );
 		}
@@ -357,9 +365,8 @@
 					progress        = easeInOut( t );
 
 					if ( t >= 1 ) {
-						/* Advance: new current image, schedule the next transition */
+						/* Advance current; next will be recalculated in beginTransition */
 						slot.currentIdx    = slot.nextIdx;
-						slot.nextIdx       = ( slot.currentIdx + 1 ) % slot.textures.length;
 						slot.transitioning = false;
 						progress           = 0;
 						setTimeout( () => beginTransition( slot, canvas ), intervalMs );

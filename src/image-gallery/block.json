@@ -16,7 +16,8 @@
 		"intervalMs":  { "type": "number", "default": 3000 },
 		"staggerMs":   { "type": "number", "default": 1500 },
 		"aspectRatio": { "type": "string", "default": "4/5" },
-		"gap":         { "type": "number", "default": 24 }
+		"gap":          { "type": "number", "default": 24 },
+		"borderRadius": { "type": "number", "default": 18 }
 	},
 	"supports": {
 		"html": false,

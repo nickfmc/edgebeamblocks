@@ -12,26 +12,30 @@
 	opacity: 1;
 }
 
-/* ── Canvas slots ────────────────────────────────────────────────────────── */
+/* ── Canvas slot wrappers (border-radius lives here so it clips the canvas) ─ */
 
-.image-gallery__slot {
+.image-gallery__slot-wrap {
 	flex: 1 1 0;
 	min-width: 0;
-	display: block;
 	aspect-ratio: var( --ig-ratio, 4 / 5 );
-	width: 100%;
-	height: auto;
-	border-radius: 4px;
-	overflow: hidden;
+	border-radius: var( --ig-radius, 18px );
+	overflow: hidden;   /* clips the WebGL canvas corners */
 	background: #111;
+}
+
+/* ── Canvas itself fills its wrapper ────────────────────────────────────── */
+
+.image-gallery__slot {
+	display: block;
+	width: 100%;
+	height: 100%;
 }
 
 /* ── Fallback: no WebGL ──────────────────────────────────────────────────── */
 
-.image-gallery--no-webgl .image-gallery__slot {
+.image-gallery--no-webgl .image-gallery__slot-wrap {
 	background-size: cover;
 	background-position: center;
-	border-radius: 4px;
 }
 
 /* ── Accessibility / motion ──────────────────────────────────────────────── */
