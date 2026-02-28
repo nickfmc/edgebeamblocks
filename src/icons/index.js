@@ -45,4 +45,14 @@ export const logoCarouselIcon = (
 	</svg>
 );
 
+export const imageGalleryIcon = (
+	<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+		<rect x="2"  y="4" width="9"  height="16" rx="1.5" fill="#455378" />
+		<rect x="13" y="4" width="9"  height="16" rx="1.5" fill="#455378" opacity="0.45" />
+		<rect x="13" y="4" width="9"  height="7.5" rx="1.5" fill="#455378" opacity="0.8" />
+		<circle cx="18" cy="19.5" r="1.5" fill="#fff" opacity="0.7" />
+		<circle cx="6"  cy="4.5"  r="1.5" fill="#fff" opacity="0.5" />
+	</svg>
+);
+
 // Add more icons here as needed

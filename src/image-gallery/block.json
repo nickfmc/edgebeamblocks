@@ -1,0 +1,31 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "gdt-ng/image-gallery",
+	"version": "0.1.0",
+	"title": "Image Gallery",
+	"category": "theme-blocks",
+	"description": "Two side-by-side images that stagger-crossfade through a gallery using a WebGL displacement shader.",
+	"example": {},
+	"attributes": {
+		"images": {
+			"type": "array",
+			"default": [],
+			"items": { "type": "object" }
+		},
+		"intervalMs":  { "type": "number", "default": 3000 },
+		"staggerMs":   { "type": "number", "default": 1500 },
+		"aspectRatio": { "type": "string", "default": "4/5" },
+		"gap":         { "type": "number", "default": 24 }
+	},
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ]
+	},
+	"textdomain": "cl-theme-blocks",
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./index.css",
+	"style":        "file:./style-index.css",
+	"render":       "file:./render.php",
+	"viewScript":   "file:./view.js"
+}
