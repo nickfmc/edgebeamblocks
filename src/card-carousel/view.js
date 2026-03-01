@@ -119,10 +119,13 @@
 			}
 
 			if ( uniformHeight ) {
-				// Clear any previously forced min-height so we measure natural content height.
-				slides.forEach( ( s ) => ( s.style.minHeight = '' ) );
+				// Clear any previously forced height so we measure natural content height.
+				slides.forEach( ( s ) => {
+					s.style.height    = '';
+					s.style.minHeight = '';
+				} );
 
-				// Force reflow so the browser recalculates heights without the old min-height.
+				// Force reflow so the browser recalculates heights without the old values.
 				track.getBoundingClientRect();
 
 				// Find the tallest slide.
@@ -133,12 +136,16 @@
 					}
 				} );
 
-				// Apply uniform min-height to all slides.
-				slides.forEach( ( s ) => ( s.style.minHeight = maxH + 'px' ) );
+				// Set an explicit height (not just min-height) so that children using
+				// height: 100% resolve correctly against their parent.
+				slides.forEach( ( s ) => ( s.style.height = maxH + 'px' ) );
 				carousel.style.setProperty( '--track-height', maxH + 'px' );
 			} else {
-				// Remove any previously forced min-heights.
-				slides.forEach( ( s ) => ( s.style.minHeight = '' ) );
+				// Remove any previously forced heights.
+				slides.forEach( ( s ) => {
+					s.style.height    = '';
+					s.style.minHeight = '';
+				} );
 				carousel.style.setProperty( '--track-height', activeSlide.offsetHeight + 'px' );
 			}
 		}
