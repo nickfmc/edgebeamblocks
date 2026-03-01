@@ -11,8 +11,13 @@
 $chevron_left  = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 $chevron_right = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
+$uniform_height = ! empty( $attributes['uniformHeight'] ) ? 'true' : 'false';
+$card_width     = isset( $attributes['cardWidth'] ) ? (int) $attributes['cardWidth'] : 360;
+
 $wrapper_attrs = get_block_wrapper_attributes( array(
-	'class' => 'card-carousel',
+	'class'               => 'card-carousel',
+	'data-uniform-height' => $uniform_height,
+	'data-card-width'     => (string) $card_width,
 ) );
 ?>
 <div <?php echo $wrapper_attrs; ?>>

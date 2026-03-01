@@ -7,6 +7,16 @@
 	"category": "theme-blocks",
 	"description": "A full-width card carousel with opacity-based depth and manual navigation.",
 	"example": {},
+	"attributes": {
+		"uniformHeight": {
+			"type": "boolean",
+			"default": false
+		},
+		"cardWidth": {
+			"type": "number",
+			"default": 360
+		}
+	},
 	"supports": {
 		"html": false,
 		"align": [ "wide", "full" ]

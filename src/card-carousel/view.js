@@ -44,6 +44,16 @@
 
 		let current = 0;
 
+		// ── Config from data attributes ───────────────────────────────────────
+
+		const uniformHeight = carousel.dataset.uniformHeight === 'true';
+		const cardWidth     = parseInt( carousel.dataset.cardWidth || '360', 10 );
+
+		// Apply card width immediately as a CSS custom property so slides
+		// render at the correct size before the first updateDimensions call.
+		carousel.style.setProperty( '--card-width', cardWidth + 'px' );
+		carousel.style.setProperty( '--card-step',  ( cardWidth + SLIDE_GAP ) + 'px' );
+
 		// ── Ensure keyboard focus is possible ────────────────────────────────
 
 		if ( ! carousel.hasAttribute( 'tabindex' ) ) {
@@ -91,28 +101,46 @@
 		}
 
 		/**
-		 * Measure the active slide and update CSS custom properties so the
-		 * track has the correct height and step spacing.
+		 * Measure slides and update CSS custom properties so the track has the
+		 * correct height and step spacing.
+		 *
+		 * Uniform-height mode: all slides are forced to min-height equal to the
+		 * tallest slide. All slides are `position: absolute` so offsetHeight is
+		 * always available regardless of opacity/visibility class.
 		 */
 		function updateDimensions() {
+			// Width + step from the attribute (constant across navigations).
+			carousel.style.setProperty( '--card-width', cardWidth + 'px' );
+			carousel.style.setProperty( '--card-step',  ( cardWidth + SLIDE_GAP ) + 'px' );
+
 			const activeSlide = slides[ current ];
 			if ( ! activeSlide ) {
 				return;
 			}
 
-			// Temporarily lift visibility restrictions to measure natural height.
-			const prevPointerEvents = activeSlide.style.pointerEvents;
-			const prevPosition      = track.style.height;
+			if ( uniformHeight ) {
+				// Clear any previously forced min-height so we measure natural content height.
+				slides.forEach( ( s ) => ( s.style.minHeight = '' ) );
 
-			// Read dimensions from the active slide.
-			const cardW  = activeSlide.offsetWidth;
-			const cardH  = activeSlide.offsetHeight;
-			const step   = cardW + SLIDE_GAP;
+				// Force reflow so the browser recalculates heights without the old min-height.
+				track.getBoundingClientRect();
 
-			// Apply CSS custom properties to the carousel root so CSS can use them.
-			carousel.style.setProperty( '--card-width', cardW + 'px' );
-			carousel.style.setProperty( '--card-step',  step  + 'px' );
-			carousel.style.setProperty( '--track-height', cardH + 'px' );
+				// Find the tallest slide.
+				let maxH = 0;
+				slides.forEach( ( s ) => {
+					if ( s.offsetHeight > maxH ) {
+						maxH = s.offsetHeight;
+					}
+				} );
+
+				// Apply uniform min-height to all slides.
+				slides.forEach( ( s ) => ( s.style.minHeight = maxH + 'px' ) );
+				carousel.style.setProperty( '--track-height', maxH + 'px' );
+			} else {
+				// Remove any previously forced min-heights.
+				slides.forEach( ( s ) => ( s.style.minHeight = '' ) );
+				carousel.style.setProperty( '--track-height', activeSlide.offsetHeight + 'px' );
+			}
 		}
 
 		// ── Navigation ────────────────────────────────────────────────────────
