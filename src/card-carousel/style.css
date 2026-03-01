@@ -1,0 +1,113 @@
+/* ============================================================
+   Card Carousel — front-end styles
+   ============================================================ */
+
+.card-carousel {
+	position: relative;
+	overflow: hidden;
+	padding-block: 2rem;
+}
+
+/* ── Track ───────────────────────────────────────────────── */
+
+.card-carousel__track {
+	position: relative;
+	height: var( --track-height, 400px );
+	overflow: visible;
+}
+
+/* ── Slides ──────────────────────────────────────────────── */
+
+.card-carousel__slide {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX( -50% );
+	width: var( --card-width, 360px );
+	opacity: 0;
+	pointer-events: none;
+	transition: transform 0.45s cubic-bezier( 0.4, 0, 0.2, 1 ),
+	            opacity 0.45s cubic-bezier( 0.4, 0, 0.2, 1 );
+	/* Give cards a default card look that users can override with inner blocks */
+	box-sizing: border-box;
+}
+
+.card-carousel__slide.is-active {
+	opacity: 1;
+	z-index: 3;
+	pointer-events: auto;
+	transform: translateX( -50% );
+}
+
+.card-carousel__slide.is-adjacent-left {
+	opacity: 0.6;
+	z-index: 2;
+	pointer-events: auto;
+	transform: translateX( calc( -50% - var( --card-step, 390px ) ) );
+}
+
+.card-carousel__slide.is-adjacent-right {
+	opacity: 0.6;
+	z-index: 2;
+	pointer-events: auto;
+	transform: translateX( calc( -50% + var( --card-step, 390px ) ) );
+}
+
+.card-carousel__slide.is-outer-left {
+	opacity: 0.3;
+	z-index: 1;
+	transform: translateX( calc( -50% - var( --card-step, 390px ) * 2 ) );
+}
+
+.card-carousel__slide.is-outer-right {
+	opacity: 0.3;
+	z-index: 1;
+	transform: translateX( calc( -50% + var( --card-step, 390px ) * 2 ) );
+}
+
+/* No-transition class applied by JS during instant repositioning */
+.card-carousel__slide.no-transition {
+	transition: none;
+}
+
+/* ── Controls ────────────────────────────────────────────── */
+
+.card-carousel__controls {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	margin-top: 2rem;
+}
+
+.card-carousel__arrow {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: none;
+	border: 2px solid currentColor;
+	border-radius: 50%;
+	width: 44px;
+	height: 44px;
+	cursor: pointer;
+	color: #1b2a4a;
+	padding: 0;
+	transition: color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+	flex-shrink: 0;
+}
+
+.card-carousel__arrow:hover {
+	color: #2d4278;
+	border-color: #2d4278;
+}
+
+.card-carousel__arrow:disabled,
+.card-carousel__arrow[aria-disabled="true"] {
+	opacity: 0.35;
+	cursor: default;
+}
+
+.card-carousel__arrow svg {
+	display: block;
+	flex-shrink: 0;
+}

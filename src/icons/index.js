@@ -55,4 +55,13 @@ export const imageGalleryIcon = (
 	</svg>
 );
 
+export const cardCarouselIcon = (
+	<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+		<rect x="1"  y="6" width="4"  height="12" rx="1" fill="#455378" opacity="0.3" />
+		<rect x="6"  y="4" width="5"  height="16" rx="1" fill="#455378" opacity="0.6" />
+		<rect x="13" y="4" width="7"  height="16" rx="1" fill="#455378" />
+		<rect x="21" y="6" width="2"  height="12" rx="1" fill="#455378" opacity="0.3" />
+	</svg>
+);
+
 // Add more icons here as needed

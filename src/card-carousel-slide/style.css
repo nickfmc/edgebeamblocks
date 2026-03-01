@@ -1,0 +1,9 @@
+/* ============================================================
+   Card Carousel Slide — front-end styles
+   ============================================================ */
+
+/* Default card appearance — override via inner blocks or theme styles */
+.card-carousel__slide {
+	box-sizing: border-box;
+	min-height: 200px;
+}

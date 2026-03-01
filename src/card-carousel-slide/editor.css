@@ -1,0 +1,23 @@
+/* ============================================================
+   Card Carousel Slide — editor styles
+   ============================================================ */
+
+.card-carousel-slide-editor {
+	border: 2px dashed #1b2a4a40;
+	border-radius: 8px;
+	padding: 1.25rem;
+	background: rgba( 0, 0, 0, 0.02 );
+	position: relative;
+	min-height: 120px;
+}
+
+.card-carousel-slide-editor::before {
+	content: "Card Slide";
+	display: block;
+	font-size: 10px;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #1b2a4a80;
+	margin-bottom: 0.75rem;
+}
