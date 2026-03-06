@@ -22,7 +22,7 @@
 	position: absolute;
 	top: 0;
 	left: 50%;
-	transform: translateX( -50% );
+	transform: translateX( -50% ) scale( 0.9 );
 	width: var( --card-width, 360px );
 	opacity: 0;
 	pointer-events: none;
@@ -36,33 +36,37 @@
 	opacity: 1;
 	z-index: 3;
 	pointer-events: auto;
-	transform: translateX( -50% );
+	transform: translateX( -50% ) scale( 1 );
 }
 
 .card-carousel__slide.is-adjacent-left {
 	opacity: 0.6;
 	z-index: 2;
 	pointer-events: auto;
-	transform: translateX( calc( -50% - var( --card-step, 390px ) ) );
+	transform-origin: top center;
+	transform: translateX( calc( -50% - var( --card-step, 390px ) ) ) scale( 0.9 );
 }
 
 .card-carousel__slide.is-adjacent-right {
 	opacity: 0.6;
 	z-index: 2;
 	pointer-events: auto;
-	transform: translateX( calc( -50% + var( --card-step, 390px ) ) );
+	transform-origin: top center;
+	transform: translateX( calc( -50% + var( --card-step, 390px ) ) ) scale( 0.9 );
 }
 
 .card-carousel__slide.is-outer-left {
 	opacity: 0.3;
 	z-index: 1;
-	transform: translateX( calc( -50% - var( --card-step, 390px ) * 2 ) );
+	transform-origin: top center;
+	transform: translateX( calc( -50% - var( --outer-step, 750px ) ) ) scale( 0.9 );
 }
 
 .card-carousel__slide.is-outer-right {
 	opacity: 0.3;
 	z-index: 1;
-	transform: translateX( calc( -50% + var( --card-step, 390px ) * 2 ) );
+	transform-origin: top center;
+	transform: translateX( calc( -50% + var( --outer-step, 750px ) ) ) scale( 0.9 );
 }
 
 /* No-transition class applied by JS during instant repositioning */
@@ -76,8 +80,8 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 1rem;
-	margin-top: 2rem;
+	gap: 140px;
+	margin-bottom: 2rem;
 }
 
 .card-carousel__arrow {
@@ -85,20 +89,19 @@
 	align-items: center;
 	justify-content: center;
 	background: none;
-	border: 2px solid currentColor;
-	border-radius: 50%;
-	width: 44px;
-	height: 44px;
+	border: none;
+	border-radius: 0;
+	width: 35px;
+	height: 35px;
 	cursor: pointer;
-	color: #1b2a4a;
+	color: white;
 	padding: 0;
-	transition: color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+	transition: opacity 0.2s ease;
 	flex-shrink: 0;
 }
 
 .card-carousel__arrow:hover {
-	color: #2d4278;
-	border-color: #2d4278;
+	opacity: 0.75;
 }
 
 .card-carousel__arrow:disabled,

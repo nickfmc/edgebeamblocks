@@ -20,7 +20,7 @@
 	aspect-ratio: var( --ig-ratio, 4 / 5 );
 	border-radius: var( --ig-radius, 18px );
 	overflow: hidden;   /* clips the WebGL canvas corners */
-	background: #111;
+	background: transparent;
 }
 
 /* ── Canvas itself fills its wrapper ────────────────────────────────────── */

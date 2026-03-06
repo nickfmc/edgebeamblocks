@@ -9,11 +9,37 @@
  *
  * CSS custom properties set on the carousel root:
  *   --card-width   Width of a single slide (px)
- *   --card-step    Width of one step = card width + gap (px)
+ *   --card-step    Distance between slide centers, tuned for consistent 28px visible gap
  *   --track-height Height of the tallest active slide (px)
  */
 ( function () {
-	const SLIDE_GAP = 24; // px between slide edges
+	// Scale values must match the CSS transforms in style.css.
+	const SCALE_ACTIVE   = 1.0;
+	const SCALE_INACTIVE = 0.9;
+
+	// Desired visible gap (px) between the active slide edge and adjacent slide edge.
+	const DESIRED_GAP = 28;
+
+	/**
+	 * Offset from center to an adjacent slide so the visible gap between
+	 * active (scale 1) and adjacent (scale 0.9) equals DESIRED_GAP.
+	 *
+	 * gap = step − cardWidth × (SCALE_ACTIVE/2 + SCALE_INACTIVE/2)
+	 * → step = DESIRED_GAP + cardWidth × (SCALE_ACTIVE + SCALE_INACTIVE) / 2
+	 */
+	function computeCardStep( cardWidth ) {
+		return DESIRED_GAP + cardWidth * ( SCALE_ACTIVE + SCALE_INACTIVE ) / 2;
+	}
+
+	/**
+	 * Absolute offset from center to an outer slide so the visible gap between
+	 * adjacent (scale 0.9) and outer (scale 0.9) also equals DESIRED_GAP.
+	 *
+	 * outerStep = cardStep + DESIRED_GAP + cardWidth × SCALE_INACTIVE
+	 */
+	function computeOuterStep( cardWidth ) {
+		return computeCardStep( cardWidth ) + DESIRED_GAP + cardWidth * SCALE_INACTIVE;
+	}
 
 	const ALL_POSITION_CLASSES = [
 		'is-active',
@@ -52,7 +78,8 @@
 		// Apply card width immediately as a CSS custom property so slides
 		// render at the correct size before the first updateDimensions call.
 		carousel.style.setProperty( '--card-width', cardWidth + 'px' );
-		carousel.style.setProperty( '--card-step',  ( cardWidth + SLIDE_GAP ) + 'px' );
+		carousel.style.setProperty( '--card-step',  computeCardStep( cardWidth ) + 'px' );
+		carousel.style.setProperty( '--outer-step', computeOuterStep( cardWidth ) + 'px' );
 
 		// ── Ensure keyboard focus is possible ────────────────────────────────
 
@@ -111,7 +138,8 @@
 		function updateDimensions() {
 			// Width + step from the attribute (constant across navigations).
 			carousel.style.setProperty( '--card-width', cardWidth + 'px' );
-			carousel.style.setProperty( '--card-step',  ( cardWidth + SLIDE_GAP ) + 'px' );
+			carousel.style.setProperty( '--card-step',  computeCardStep( cardWidth ) + 'px' );
+			carousel.style.setProperty( '--outer-step', computeOuterStep( cardWidth ) + 'px' );
 
 			const activeSlide = slides[ current ];
 			if ( ! activeSlide ) {
