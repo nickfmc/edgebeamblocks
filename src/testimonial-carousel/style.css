@@ -183,7 +183,7 @@
 @media (width <= 768px) {
 
 	.testimonial-carousel {
-		padding: 32px 16px;
+		padding: 32px 0px;
 	}
 
 	.testimonial-carousel__quote-row {
